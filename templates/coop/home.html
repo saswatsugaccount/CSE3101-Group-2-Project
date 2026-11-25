@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Cooperative Tracker{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4">Welcome, {{ user.first_name|default:user.username }}</h1>
+
+<div class="row g-3">
+  <div class="col-6 col-md-3">
+    <div class="card text-center"><div class="card-body">
+      <div class="display-6">{{ farmer_count }}</div><div class="text-muted">Active farmers</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center"><div class="card-body">
+      <div class="display-6">{{ crop_count }}</div><div class="text-muted">Crops</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center"><div class="card-body">
+      <div class="display-6">{{ delivery_count }}</div><div class="text-muted">Deliveries</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center"><div class="card-body">
+      <div class="display-6">{{ sale_count }}</div><div class="text-muted">Sales</div>
+    </div></div>
+  </div>
+</div>
+{% endblock %}
