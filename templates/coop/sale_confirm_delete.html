@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Delete sale | Cooperative Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="card border-danger">
+      <div class="card-body">
+        <h1 class="h4 text-danger">Are you sure?</h1>
+        <p>You are about to delete this sale:</p>
+        <p class="fw-bold">{{ sale.quantity }} {{ sale.crop.get_unit_display }} of {{ sale.crop.name }} on {{ sale.sale_date }} (GYD {{ sale.total_value }})</p>
+        <p class="text-muted">This cannot be undone. The sold quantity will go back into stock.</p>
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Yes, delete</button>
+          <a href="{% url 'sale_detail' sale.pk %}" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

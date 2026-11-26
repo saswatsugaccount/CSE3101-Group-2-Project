@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Monthly deliveries | Cooperative Tracker{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">Total deliveries by produce type</h1>
+<p class="text-muted">Shows how much of each crop was delivered in a chosen month, to help plan storage and sales.</p>
+
+<form method="get" class="row g-2 align-items-end mb-3">
+  <div class="col-12 col-sm-6 col-md-4">
+    <label for="id_month" class="form-label">Month</label>
+    {{ form.month }}
+    {% for error in form.month.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+  </div>
+  <div class="col-auto"><button type="submit" class="btn btn-success">Show report</button></div>
+</form>
+
+{% if rows is not None %}
+  {% if rows %}
+  <div class="table-responsive">
+    <table class="table table-striped align-middle bg-white">
+      <thead class="table-success">
+        <tr><th>Crop</th><th class="text-end">Deliveries</th><th class="text-end">Total quantity</th><th class="text-end">Total value (GYD)</th></tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row.crop__name }}</td>
+          <td class="text-end">{{ row.count }}</td>
+          <td class="text-end">{{ row.quantity }} {{ row.crop__unit }}</td>
+          <td class="text-end">{{ row.value }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="fw-bold"><td>Total</td><td class="text-end">{{ totals.count }}</td><td></td><td class="text-end">{{ totals.value }}</td></tr>
+      </tfoot>
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info">No deliveries were recorded in this month.</div>
+  {% endif %}
+{% endif %}
+{% endblock %}

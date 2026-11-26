@@ -17,6 +17,21 @@
         <ul class="navbar-nav me-auto">
           {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+
+            {% if user.is_superuser or user.role == "ADMIN" or user.role == "MANAGER" or user.role == "STAFF" %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'sale_list' %}">Sales</a></li>
+            {% endif %}
+
+            {% if user.is_superuser or user.role == "ADMIN" or user.role == "MANAGER" %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reports</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'report_monthly' %}">Monthly deliveries</a></li>
+                  <li><a class="dropdown-item" href="{% url 'report_farmer' %}">Deliveries per farmer</a></li>
+                  <li><a class="dropdown-item" href="{% url 'report_stock' %}">Current stock</a></li>
+                </ul>
+              </li>
+            {% endif %}
           {% endif %}
         </ul>
         {% if user.is_authenticated %}

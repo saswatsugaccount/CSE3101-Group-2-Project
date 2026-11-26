@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Sale details | Cooperative Tracker{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">Sale details</h1>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <dl class="row mb-0">
+      <dt class="col-sm-4">Crop</dt><dd class="col-sm-8">{{ sale.crop.name }}</dd>
+      <dt class="col-sm-4">Quantity</dt><dd class="col-sm-8">{{ sale.quantity }} {{ sale.crop.get_unit_display }}</dd>
+      <dt class="col-sm-4">Selling price per unit</dt><dd class="col-sm-8">GYD {{ sale.unit_price }}</dd>
+      <dt class="col-sm-4">Total value</dt><dd class="col-sm-8 fw-bold">GYD {{ sale.total_value }}</dd>
+      <dt class="col-sm-4">Buyer</dt><dd class="col-sm-8">{{ sale.buyer_name|default:"-" }}</dd>
+      <dt class="col-sm-4">Sale date</dt><dd class="col-sm-8">{{ sale.sale_date }}</dd>
+      <dt class="col-sm-4">Recorded by</dt><dd class="col-sm-8">{{ sale.recorded_by|default:"-" }}</dd>
+    </dl>
+  </div>
+</div>
+
+<a href="{% url 'sale_list' %}" class="btn btn-outline-secondary">Back to sales</a>
+<a href="{% url 'sale_update' sale.pk %}" class="btn btn-success">Edit</a>
+{% if user.is_superuser or user.role == "ADMIN" or user.role == "MANAGER" %}
+  <a href="{% url 'sale_delete' sale.pk %}" class="btn btn-danger">Delete</a>
+{% endif %}
+{% endblock %}
